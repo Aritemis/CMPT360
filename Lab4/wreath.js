@@ -72,7 +72,7 @@ function render()
     // Your code goes here:
 
     var scale  = 0.08;
-    var radius = .8;
+    var radius = .7;
     var theta;
     var scaled = scalem( scale, scale, scale );
 
