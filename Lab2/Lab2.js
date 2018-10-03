@@ -55,6 +55,7 @@ function split( a, b, c, iteration )
         --iteration;
         //find three middle points
         var x = scale( 0.5, add( a, b ));
+        
         var y = scale( 0.5, add( a, c ));
         var z = scale( 0.5, add( b, c ));
         //call for 3 new triangles
