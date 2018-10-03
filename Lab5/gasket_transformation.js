@@ -4,42 +4,29 @@ var canvas;
 var gl;
 
 var points = [];
-var NumTimesToSubdivide = 3;
-
-
-var CTM = mat4(); // identity matrix
-var CTMLoc;
-
-var toDivide;
-//toDivide = ((2 * NumTimesToSubdivide) + (((NumTimesToSubdivide - 2) * 2) * Math.floor(NumTimesToSubdivide / 2)));
-toDivide = 2 * NumTimesToSubdivide;
-
-//I'm currently playing with this Nick
-if(NumTimesToSubdivide > 2){ toDivide += 2 * (NumTimesToSubdivide) }
-
-var scale = 1 / toDivide;
-var scaled = scalem(scale, scale, scale);
+var NumTimesToSubdivide = 0;
 
 var mod = 1;
 var T1 = translate( 0.0, mod, 0.0);
 var T2 = translate(-mod,-mod, 0.0);
 var T3 = translate( mod,-mod, 0.0);
 
-//var T = [T1, T2, T3];
+var T = [T1, T2, T3];
 
+var half = [.5, .5];
+
+var CTM = mat4(); // identity matrix
+var CTMLoc;
+
+var scale;
+var scaled;
 
 window.onload = function init()
 {
     canvas = document.getElementById( "gl-canvas" );
-
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    //
-    //  Initialize our data for the Sierpinski Gasket
-    //
-
-    // First, initialize the corners of our gasket with three points.
     points =
     [
         vec2(  0,  1 ),
@@ -79,42 +66,40 @@ window.onload = function init()
 
 function triangle(path)
 {
-    // Draw three triangles.
-
     var x = path[0][0];
     var y = (path[0][1] + path[1][1])/2;
     var center = translate(x, y, 0);
 
-    CTM = mult(mult(center, scaled), T1);
-    gl.uniformMatrix4fv(CTMLoc, false, flatten(CTM));
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
-
-    CTM = mult(mult(center, scaled), T2);
-    gl.uniformMatrix4fv(CTMLoc, false, flatten(CTM));
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
-
-    CTM = mult(mult(center, scaled), T3);
-    gl.uniformMatrix4fv(CTMLoc, false, flatten(CTM));
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    for ( var i = 0; i < T.length; i++ )
+    {
+      CTM = mult(mult(center, scaled), T[i]);
+      gl.uniformMatrix4fv(CTMLoc, false, flatten(CTM));
+      gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    }
 }
 
 function divideTriangle(path, count)
 {
-    // check for end of recursion
-    if ( count == 1 )
+    if (count > 0 && count == NumTimesToSubdivide)
     {
-        triangle(path);
+      path = points.slice();
+      scale = scale = 1 / Math.pow(2, NumTimesToSubdivide);
+      scaled = scalem(scale, scale, scale);
     }
-    else if( count == 0 )
+
+    if( count == 0 )
     {
       gl.uniformMatrix4fv(CTMLoc, false, flatten(CTM));
       gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    }
+    else if ( count == 1 )
+    {
+        triangle(path);
     }
     else
     {
         count--;
         // Change path and recursively call divideTriangle
-        var half = [.5, .5];
         var ab = mult( add( path[0], path[1] ), half );
         var ac = mult( add( path[0], path[2] ), half );
         var bc = mult( add( path[1], path[2] ), half );
@@ -129,9 +114,8 @@ function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
 
-    var path = points.slice();
+    var path = [[],[],[]];
     divideTriangle(path, NumTimesToSubdivide);
 
-    //requestAnimFrame( render );
-
+    requestAnimFrame( render );
 }
