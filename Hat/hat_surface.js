@@ -9,11 +9,13 @@ var nColumns = 50;
 
 var data = [];
 
-for( var i = 0; i < nRows; ++i ) {
+for( var i = 0; i < nRows; ++i )
+{
     data.push( [] );
     var x = Math.PI*(4*i/(nRows-1)-2.0);
 
-    for( var j = 0; j < nColumns; ++j ) {
+    for( var j = 0; j < nColumns; ++j )
+    {
         var y = Math.PI*(4*j/(nColumns-1)-2.0);
         var r = Math.sqrt(x*x+y*y);
 
@@ -70,20 +72,21 @@ window.onload = function init()
 // vertex array of nRows*nColumns quadrilaterals
 // (two triangles/quad) from data
 
-    for(var i=0; i<nRows-1; i++) {
-        for(var j=0; j<nColumns-1;j++) {
+    for(var i=0; i<nRows-1; i++)
+    {
+        for(var j=0; j<nColumns-1;j++)
+        {
             pointsArray.push( vec4(2*i/(nRows-1)-1, data[i][j], 2*j/(nColumns-1)-1, 1.0));
             pointsArray.push( vec4(2*(i+1)/(nRows-1)-1, data[i+1][j], 2*j/(nColumns-1)-1, 1.0));
             pointsArray.push( vec4(2*(i+1)/(nRows-1)-1, data[i+1][j+1], 2*(j+1)/(nColumns-1)-1, 1.0));
             pointsArray.push( vec4(2*i/(nRows-1)-1, data[i][j+1], 2*(j+1)/(nColumns-1)-1, 1.0) );
+        }
     }
-}
     //
     //  Load shaders and initialize attribute buffers
     //
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
-
 
     var vBufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, vBufferId );
@@ -114,9 +117,7 @@ window.onload = function init()
     document.getElementById("Button12").onclick = function(){ytop *= 1.1; bottom *= 1.1;};
 
     render();
-
 }
-
 
 function render()
 {
@@ -134,13 +135,13 @@ function render()
     // draw each quad as two filled red triangles
     // and then as two black line loops
 
-    for(var i=0; i<pointsArray.length; i+=4) {
+    for(var i = 0; i < pointsArray.length; i += 4)
+    {
         gl.uniform4fv(fColor, flatten(red));
         gl.drawArrays( gl.TRIANGLE_FAN, i, 4 );
         gl.uniform4fv(fColor, flatten(black));
         gl.drawArrays( gl.LINE_LOOP, i, 4 );
     }
-
 
     requestAnimFrame(render);
 }

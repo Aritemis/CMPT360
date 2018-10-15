@@ -8,16 +8,19 @@ var nColumns = 50;
 
 
 var data = new Array(nRows);
-for(var i =0; i<nRows; i++) data[i]=new Array(nColumns);
 
-for(var i=0; i<nRows; i++) {
+for(var i = 0; i < nRows; i++)
+{
+  data[i]=new Array(nColumns);
+}
+
+for(var i=0; i<nRows; i++)
+{
     var x = Math.PI*(4*i/(nRows-1)-2.0);
-    for(var j=0; j<nColumns; j++) {
+    for(var j=0; j<nColumns; j++)
+    {
         var y = Math.PI*(4*j/(nColumns-1)-2.0);
         var r = Math.sqrt(x*x+y*y)
-
-        // take care of 0/0 for r = 0
-
 
         if(r) data[i][j] = Math.sin(r)/r;
         else data[i][j] = 1;
@@ -49,7 +52,8 @@ var eye;
 const at = vec3(0.0, 0.0, 0.0);
 const up = vec3(0.0, 1.0, 0.0);
 
-window.onload = function init() {
+window.onload = function init()
+{
 
     canvas = document.getElementById( "gl-canvas" );
 
@@ -63,10 +67,12 @@ window.onload = function init() {
 
 // vertex array of data for nRows and nColumns of line strips
 
-    for(var i=0; i<nRows; i++) for(var j=0; j<nColumns;j++) {
+    for(var i=0; i<nRows; i++) for(var j=0; j<nColumns;j++)
+    {
         pointsArray.push(vec4(2*i/(nRows-1)-1, data[i][j], 2*j/(nColumns-1)-1, 1.0));
     }
-    for(var j=0; j<nColumns; j++) for(var i=0; i<nRows;i++) {
+    for(var j=0; j<nColumns; j++) for(var i=0; i<nRows;i++)
+    {
         pointsArray.push(vec4(2*i/(nRows-1)-1, data[i][j], 2*j/(nColumns-1)-1, 1.0));
     }
     //
@@ -106,7 +112,8 @@ window.onload = function init() {
 }
 
 
-var render = function() {
+var render = function()
+{
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     eye = vec3(radius*Math.cos(theta)*Math.sin(phi),
@@ -120,8 +127,10 @@ var render = function() {
 
 // render columns of data then rows
 
-    for(var i=0; i<nRows; i++) gl.drawArrays( gl.LINE_STRIP, i*nColumns, nColumns );
-    for(var i=0; i<nColumns; i++) gl.drawArrays( gl.LINE_STRIP, i*nRows+pointsArray.length/2, nRows );
+    for(var i=0; i<nRows; i++)
+    { gl.drawArrays( gl.LINE_STRIP, i*nColumns, nColumns ); }
+    for(var i=0; i<nColumns; i++)
+    { gl.drawArrays( gl.LINE_STRIP, i*nRows+pointsArray.length/2, nRows ); }
 
     requestAnimFrame(render);
 }
