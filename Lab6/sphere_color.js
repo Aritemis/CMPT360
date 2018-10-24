@@ -187,8 +187,7 @@ function initialize()
 function addpoints()
 {
     var r_data = 1.0;
-
-    // mesh points
+    
     if(type == "mesh")
     {
         var theta_data, phi_data;
@@ -226,7 +225,6 @@ function addpoints()
         pointsArray = [];
         colors = [];
 
-
         for(var i = 0; i < nRows - 1; i++)
         {
             for(var j = 0; j < nColumns - 1; j++)
@@ -235,7 +233,6 @@ function addpoints()
               phi_data1 = 2 * Math.PI * (j/(nColumns - 1));
               theta_data2 = Math.PI * (((i + 1)/(nRows - 1)) - (1/2));
               phi_data2 = 2 * Math.PI * ((j + 1)/(nColumns - 1));
-
               var x;
 
               var xyz1 = get_xyz(r_data, theta_data1, phi_data1);
@@ -268,7 +265,6 @@ function addpoints()
               colors.push(black);
             }
         }
-
     }
 }
 
