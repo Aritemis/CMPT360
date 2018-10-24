@@ -187,7 +187,7 @@ function initialize()
 function addpoints()
 {
     var r_data = 1.0;
-    
+
     if(type == "mesh")
     {
         var theta_data, phi_data;
@@ -207,16 +207,18 @@ function addpoints()
           }
         }
 
-        for(var j = 0; j < nColumns; j++) for(var i = 0; i < nRows; i++)
+        for(var k = 0; k < nColumns; k++)
         {
-          phi_data = 2 * Math.PI * (j/(nRows - 1));
-          theta_data = Math.PI * ((i/(nColumns - 1)) - (1/2));
-          var xyz = get_xyz(r_data, theta_data, phi_data);
-          pointsArray.push(xyz);
-          var x = (1 + xyz[1]) / 2;
-          colors.push(find_color(colormap, (1 - x, x)));
+          for(var l = 0; l < nRows; l++)
+          {
+            theta_data = Math.PI * ((l/(nRows - 1)) - (1/2));
+            phi_data = 2 * Math.PI * (k/(nColumns - 1));
+            var xyz = get_xyz(r_data, theta_data, phi_data);
+            pointsArray.push(xyz);
+            var x = (1 + xyz[1]) / 2;
+            colors.push(find_color(colormap, (1 - x, x)));
+          }
         }
-
     }
 
     else if(type = "surface")
