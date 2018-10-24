@@ -12,7 +12,8 @@ var nColumns = 30;
 var pointsArray = [];
 var colors = [];
 
-// eye position
+// For calculating eye position
+// The radius, theta, phi here are NOT for calculating sphere coordinates of vertices.
 var radius = 6;
 var theta  = 0.5;
 var phi    = 0.0;
@@ -184,7 +185,11 @@ function initialize()
 
 function addpoints()
 {
-    var r_data = 1.0;
+    var r_data = 0.3;
+    var R_data = 1.0;
+
+    var mod = Math.PI;
+    var div = (2 * (Math.PI));
 
     if(type == "mesh")
     {
@@ -196,12 +201,12 @@ function addpoints()
         {
           for(var j = 0; j < nColumns; j++)
           {
-            theta_data = Math.PI * ((i/(nRows - 1)) - (1/2));
+            theta_data = 2 * Math.PI * ((i/(nRows - 1)) - (1/2));
             phi_data = 2 * Math.PI * (j/(nColumns - 1));
             var xyz = get_xyz(r_data, theta_data, phi_data);
             pointsArray.push(xyz);
-            var x = (1 + xyz[1]) / 2;
-            colors.push(find_color(colormap, (1 - x, x)));
+            var x = ((theta_data + mod)/div)
+            colors.push(find_color(colormap, (1 - x), x));
           }
         }
 
@@ -209,12 +214,12 @@ function addpoints()
         {
           for(var l = 0; l < nRows; l++)
           {
-            theta_data = Math.PI * ((l/(nRows - 1)) - (1/2));
+            theta_data = 2 * Math.PI * ((l/(nRows - 1)) - (1/2));
             phi_data = 2 * Math.PI * (k/(nColumns - 1));
             var xyz = get_xyz(r_data, theta_data, phi_data);
             pointsArray.push(xyz);
-            var x = (1 + xyz[1]) / 2;
-            colors.push(find_color(colormap, (1 - x, x)));
+            var x = ((theta_data + mod)/div)
+            colors.push(find_color(colormap, (1 - x), x));
           }
         }
     }
@@ -229,31 +234,32 @@ function addpoints()
         {
             for(var j = 0; j < nColumns - 1; j++)
             {
-              theta_data1 = Math.PI * ((i/(nRows - 1)) - (1/2));
+              theta_data1 = 2 * Math.PI * ((i/(nRows - 1)) - (1/2));
               phi_data1 = 2 * Math.PI * (j/(nColumns - 1));
-              theta_data2 = Math.PI * (((i + 1)/(nRows - 1)) - (1/2));
+              theta_data2 = 2 * Math.PI * (((i + 1)/(nRows - 1)) - (1/2));
               phi_data2 = 2 * Math.PI * ((j + 1)/(nColumns - 1));
+
               var x;
 
               var xyz1 = get_xyz(r_data, theta_data1, phi_data1);
               pointsArray.push( xyz1 );
-              x = (1 + xyz1[1]) / 2;
-              colors.push(find_color(colormap, (1 - x, x)));
+              x = ((theta_data1 + mod)/div)
+              colors.push(find_color(colormap, (1 - x), x));
 
               var xyz2 = get_xyz(r_data, theta_data2, phi_data1);
               pointsArray.push( xyz2 );
-              x = (1 + xyz2[1]) / 2;
-              colors.push(find_color(colormap, (1 - x, x)));
+              x = ((theta_data2 + mod)/div)
+              colors.push(find_color(colormap, (1 - x), x));
 
               var xyz3 = get_xyz(r_data, theta_data2, phi_data2);
               pointsArray.push( xyz3 );
-              x = (1 + xyz3[1]) / 2;
-              colors.push(find_color(colormap, (1 - x, x)));
+              x = ((theta_data2 + mod)/div)
+              colors.push(find_color(colormap, (1 - x), x));
 
               var xyz4 = get_xyz(r_data, theta_data1, phi_data2);
               pointsArray.push( xyz4 );
-              x = (1 + xyz4[1]) / 2;
-              colors.push(find_color(colormap, (1 - x, x)));
+              x = ((theta_data1 + mod)/div)
+              colors.push(find_color(colormap, (1 - x), x));
 
               pointsArray.push( xyz1 );
               pointsArray.push( xyz2 );
@@ -269,18 +275,18 @@ function addpoints()
 }
 
 // return color given a colormap and a ratio
-function find_color(colormap,ratio)
+function find_color(colormap, x, y)
 {
     switch (colormap)
     {
         case "spring":
-            return mix(magenta, yellow, ratio);
+            return mix(mix(magenta, yellow, ((x/2.55), (2.55 * y))), mix(yellow, magenta, (x, y)), (x, y));
         case "summer":
-            return mix(green, yellow, ratio);
+            return mix(mix(green, yellow, ((x/2.4), (2.4 * y))), mix(yellow, green, (x, y)), (x, y));
         case "autumn":
-            return mix(red, mix(orange, yellow, ratio), ratio);
+            return mix(mix(red, orange, ((x/2.4), (2.4 * y))), mix(orange, red, (x, y)), (x, y));
         case "winter":
-            return mix(blue, green, ratio);
+            return mix(mix(blue, green, ((x/2.4), (2.4 * y))), mix(green, blue, (x, y)), (x, y));
     }
 }
 
@@ -289,9 +295,9 @@ function get_xyz(r, theta, phi)
 {
     return vec4
     (
-        (r * Math.cos(theta) * Math.sin(phi)),
+        ((1 + r * Math.cos(theta)) * Math.sin(phi)),
         (r * Math.sin(theta)),
-        (r * Math.cos(theta) * Math.cos(phi)),
+        ((1 + r * Math.cos(theta)) * Math.cos(phi)),
         1.0
     );
 }
