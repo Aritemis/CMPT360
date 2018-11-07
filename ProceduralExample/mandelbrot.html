@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<div>
+ <button id = "button">Start/Stop Animation</button>
+ <button id = "button2">Switch ColorMode</button>
+ <p></p>
+ <input id= "max"/><button id="button1">Max Iteration</button>
+ <p></p>
+</div>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+
+
+void main()
+{
+    gl_Position = vPosition;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+uniform int max_iteration;
+uniform int colorMode;
+
+float height;
+float width;
+
+void main()
+{
+   const float PI = 3.14159;
+
+   float n = 500.0;
+   float m = 500.0;
+   float v;
+   const int max = 100; 
+   float cx = 3.0*gl_FragCoord.x/n - 2.0;
+   float cy = 3.0*gl_FragCoord.y/m - 1.5;
+
+   float x=0.0, y=0.0;
+   float bx, by;
+
+   for ( int k = 0; k < max; k++ ) {
+       if (k <= max_iteration){
+            // compute c = c^2 + p
+
+            bx  = x*x-y*y;
+            by = 2.0*x*y;
+            x = bx+cx;
+            y = by+cy;
+            v = x*x+y*y;
+            
+            if (colorMode == 0){
+                if ( v > 4.0 ) {
+                    if (k==1)      gl_FragColor = vec4(0.0,0.0,1.0,1.0); // blue
+                    else if (k==2) gl_FragColor = vec4(0.0,1.0,0.0,1.0); // green
+                    else if (k==3) gl_FragColor = vec4(1.0,0.0,0.0,1.0); // red
+                    else if (k==4) gl_FragColor = vec4(0.0,1.0,1.0,1.0); // cyan
+                    else if (k==5) gl_FragColor = vec4(1.0,0.0,1.0,1.0); // magenta
+                    else if (k==6) gl_FragColor = vec4(1.0,1.0,0.0,1.0); // yellow
+                    else           gl_FragColor = vec4(0.0,0.0,0.0,1.0); // black
+                    break;
+                }
+            }
+            else{
+                if (v>4.0){
+                    v = float(k)/float(max_iteration);
+                    gl_FragColor.r = 1.0;
+                    gl_FragColor.g = v;
+                    gl_FragColor.b = .0;
+                    gl_FragColor.a = 1.0;
+                    break;
+                }
+                else if(k==max_iteration){
+                    gl_FragColor = vec4(0.0,0.0,1.0,1.0); 
+                }
+            }
+        }
+    }
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="mandelbrot.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="500" height="500">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>
