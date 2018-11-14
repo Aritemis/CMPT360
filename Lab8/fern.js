@@ -129,7 +129,7 @@ function getConstants(pattern_type)
 				return [ 0.75, 0.04,-0.04, 0.85, 0.00, 1.60];
 			}
 			break;
-		case 1:
+		case 2:
 			if(randomValue <= .01)
 			{
 				return [ 0.00, 0.00, 0.00, 0.16, 0.00, 0.00];
@@ -161,7 +161,7 @@ function render()
 	gl.uniform1i(colorLoc, colorValue);
 
 	//Draw the fern
-	gl.drawArrays(gl.LINES, 0, points.length);
+	gl.drawArrays(gl.POINTS, 0, points.length);
 
 
 	requestAnimationFrame(render);
