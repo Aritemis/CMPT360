@@ -23,12 +23,15 @@ window.onload = function init()
     //  Initialize our data for the Sierpinski Gasket
     //
 
-    if(depth == 0 ){
+    if(depth == 0 )
+    {
         points.push(vertices[0]);
         points.push(vertices[1]);
     }
-    else 
+    else
+    {
         addpoints(vertices[0],vertices[1], depth);
+    }
 
     //
     //  Configure WebGL
@@ -54,7 +57,8 @@ window.onload = function init()
     gl.enableVertexAttribArray( vPosition );
 
     gl.uniform1f( gl.getUniformLocation(program, "depth"), depth);
-    document.getElementById( "button_depth" ).onclick = function () {
+    document.getElementById( "button_depth" ).onclick = function ()
+    {
         depth = document.getElementById('depth').value;
         gl.uniform1f( gl.getUniformLocation(program, "depth"), depth);
         points=[];
@@ -64,8 +68,10 @@ window.onload = function init()
     render();
 };
 
-function addpoints(p,q,depth){
-    if (depth > 0 ){
+function addpoints(p,q,depth)
+{
+    if (depth > 0 )
+    {
 
         var a = vec2(2*p[0]/3+q[0]/3, 2*p[1]/3+q[1]/3);
         var b = vec2(p[0]/3+2*q[0]/3, p[1]/3+2*q[1]/3);
@@ -74,7 +80,8 @@ function addpoints(p,q,depth){
         var c3 = scale(1/2, add(a,b));
         var c = vec2(c3[0]+c2[0],c3[1]+c2[1]);
 
-        if (depth==1){
+        if (depth==1)
+        {
             points.push(p);
             points.push(a);
             points.push(c);
@@ -89,7 +96,8 @@ function addpoints(p,q,depth){
     }
 }
 
-function render() {
+function render()
+{
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.LINE_STRIP, 0, points.length );
 }

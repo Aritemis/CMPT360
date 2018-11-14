@@ -64,7 +64,7 @@ var lightModel = 0, lightModelLoc;
 
 // default choices
 var shading = "Gouraud";
-var shape = "sphere"
+var shape = "sphere";
 
 window.onload = function init()
 {
@@ -149,7 +149,7 @@ window.onload = function init()
                 shape = "sphere";
                 break;
             case 1:
-                shape = "torus"
+                shape = "torus";
                 break;
         }
         init();
@@ -291,7 +291,7 @@ function addpoints(shape)
         }
     }
     // torus
-    else if(shape = "torus")
+    else if(shape == "torus")
     {
       var r_data = 0.2;
       var R_data = 1.0;

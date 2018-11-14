@@ -39,12 +39,12 @@ var modelViewMatrix, projectionMatrix;
 var modelViewMatrixLoc, projectionMatrixLoc;
 
 // basic colors
-const black = vec4(0.0, 0.0, 0.0, 1.0);
-const red = vec4(1.0, 0.0, 0.0, 1.0);
+const black = vec4(0.0,0.0,0.0,1.0);
+const red = vec4(1.0,0.0, 0.0,1.0);
 const blue = vec4(0.0,0.0,1.0,1.0);
 const green = vec4(0.0,0.5,0.0,1.0);
-const magenta = vec4(1.0, 0.0, 1.0, 1.0);
-const yellow = vec4(1.0, 1.0, 0.0, 1.0);
+const magenta = vec4(1.0,0.0,1.0,1.0);
+const yellow = vec4(1.0,1.0,0.0,1.0);
 const orange = vec4(1.0,165/255,0.0,1.0);
 
 // default type and colormap
