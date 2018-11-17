@@ -1,9 +1,8 @@
-
 var gl, canvas;
 var program;
 
 var points = []; //Store the points for the fern
-var number_points = 100000; // Number of points
+var number_points = 1000000; // Number of points 100000
 
 var pattern_type = 0;
 
@@ -57,15 +56,16 @@ window.onload = function init()
 	var menu1 = document.getElementById("menu1");
     menu1.addEventListener("change", function()
 		{
-				pattern_type = menu1.selectedIndex;
-				init();
+			pattern_type = menu1.selectedIndex;
+			init();
 		})
 
-		var menu2 = document.getElementById("menu2");
-			menu2.addEventListener("change", function()
-			{
-					colorValue = menu2.selectedIndex;
-			})
+	var menu2 = document.getElementById("menu2");
+	menu2.addEventListener("change", function()
+		{
+			colorValue = menu2.selectedIndex;
+			init();
+		})
 
     render();
 }
@@ -129,6 +129,24 @@ function getConstants(pattern_type)
 				return [ 0.75, 0.04,-0.04, 0.85, 0.00, 1.60];
 			}
 			break;
+		case 1:
+			if(randomValue <= .01)
+			{
+				return [ 0.00, 0.00, 0.00, 0.16, 0.00, 0.00];
+			}
+			else if(randomValue <= .08)
+			{
+				return [ 0.20,-0.26, 0.23, 0.22, 0.00, 1.60];
+			}
+			else if(randomValue <= .15)
+			{
+				return [-0.15, 0.28, 0.26, 0.24, 0.00, 0.44];
+			}
+			else
+			{
+				return [ 0.85, 0.04,-0.04, 0.85, 0.00, 1.60];
+			}
+			break;
 		case 2:
 			if(randomValue <= .01)
 			{
@@ -144,7 +162,7 @@ function getConstants(pattern_type)
 			}
 			else
 			{
-				return [ 0.75, 0.04,-0.04, 0.85, 0.00, 1.60];
+				return [ 0.80, 0.04,-0.04, 0.85, 0.00, 1.60];
 			}
 			break;
 	}
@@ -162,7 +180,6 @@ function render()
 
 	//Draw the fern
 	gl.drawArrays(gl.POINTS, 0, points.length);
-
 
 	requestAnimationFrame(render);
 }

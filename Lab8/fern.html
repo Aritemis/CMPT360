@@ -23,7 +23,6 @@
 <script id="vertex-shader" type="x-shader/x-vertex">
 attribute vec4 vPosition;
 uniform mat4 projectionMatrix;
-
 void main()
 {
     gl_Position = projectionMatrix * vPosition;
@@ -35,7 +34,6 @@ void main()
 precision mediump float;
 uniform vec4 Color;
 uniform int color_index;
-
 void main()
 {
   if(color_index == 0)
@@ -62,7 +60,6 @@ void main()
   {
     gl_FragColor = vec4(1.0,0.5,0.0,1.0);
   }
-
 }
 </script>
 
