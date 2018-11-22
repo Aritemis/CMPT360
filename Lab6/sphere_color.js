@@ -205,18 +205,7 @@ function addpoints()
           }
         }
 
-        for(var k = 0; k < nColumns; k++)
-        {
-          for(var l = 0; l < nRows; l++)
-          {
-            theta_data = Math.PI * ((l/(nRows - 1)) - (1/2));
-            phi_data = 2 * Math.PI * (k/(nColumns - 1));
-            var xyz = get_xyz(r_data, theta_data, phi_data);
-            pointsArray.push(xyz);
-            var x = (1 + xyz[1]) / 2;
-            colors.push(find_color(colormap, (1 - x, x)));
-          }
-        }
+
     }
 
     else if(type = "surface")
