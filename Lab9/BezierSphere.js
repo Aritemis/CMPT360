@@ -42,12 +42,12 @@ var generatePatches = function()
       {
         theta = Math.PI * ((i/(nRows - 1)) - (1/2));
         phi = 2 * Math.PI * (j/(nColumns - 1));
-        var xyz = vec4
+        var xyz = vec3
         (
             (r * Math.cos(theta) * Math.sin(phi)),
             (r * Math.sin(theta)),
             (r * Math.cos(theta) * Math.cos(phi)),
-            1.0
+            //1.0
         );
         vertices.push(xyz);
       }
@@ -59,8 +59,8 @@ var generatePatches = function()
     for(var patch = 0; patch < numPatches; patch++)
     {
       var base = (3 * nColumns) * Math.floor(((patch) / numPatchesRows));
-      var A = base + (3 * (patch % numPatchesRows));
-      console.log("b1 " + (numPatchesColumns * nColumns) + "  b2 " + Math.floor(((patch + 1) / numPatchesRows)) + "  b " + base + "  A " + A);
+      var A = base + (3 * (patch % numPatchesColumns));
+      //console.log("b1 " + (numPatchesColumns * nColumns) + "  b2 " + Math.floor(((patch + 1) / numPatchesRows)) + "  b " + base + "  A " + A);
       indices[patch] = new Array(16);
       indices[patch][0] = A;
       indices[patch][1] = A + 1;
@@ -81,9 +81,9 @@ var generatePatches = function()
       indices[patch][13] = A + 1;
       indices[patch][14] = A + 2;
       indices[patch][15] = A + 3;
-      if((patch + 1) % numPatchesRows == 0)
+      if((patch + 1) % numPatchesColumns == 0)
       {
-        A = base + (3 * ((patch - numPatchesRows + 1) % numPatchesRows));
+        A = base + (3 * ((patch - numPatchesColumns + 1) % numPatchesColumns));
         indices[patch][3] = A;
         A += numPatchesColumns * 3;
         indices[patch][7] = A;
@@ -107,9 +107,6 @@ function reset()
     points = [];
     nRows = 1 + numPatchesRows * 3;
     nColumns = numPatchesColumns * 3;
-
-
-
 
     delta = delta * 0.9;
     init();

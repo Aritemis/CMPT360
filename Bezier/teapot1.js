@@ -21,7 +21,8 @@ var index = 0;
 
 var points =[];
 
-var divideCurve = function( c, r , l) {
+var divideCurve = function( c, r , l)
+{
 
 // divides c into left (l) and right ( r ) curve data
 
@@ -45,7 +46,8 @@ var divideCurve = function( c, r , l) {
 //----------------------------------------------------------------------------
 
 
-var drawPatch = function(p) {
+var drawPatch = function(p)
+{
 
     // Draw the quad (as two triangles) bounded by the corners of the
     //   Bezier patch
@@ -63,10 +65,12 @@ var drawPatch = function(p) {
 //----------------------------------------------------------------------------
 
 
-var dividePatch = function (p, count ) {
+var dividePatch = function (p, count )
+{
 
 
-   if ( count > 0 ) {
+   if ( count > 0 )
+   {
 
 
     var a =  mat4();
@@ -79,7 +83,8 @@ var dividePatch = function (p, count ) {
 	// subdivide curves in u direction, transpose results, divide
 	// in u direction again (equivalent to subdivision in v)
 
-        for ( var k = 0; k < 4; ++k ) {
+        for ( var k = 0; k < 4; ++k )
+        {
 
                 var pp = p[k];
                 var aa = vec4();
@@ -95,7 +100,8 @@ var dividePatch = function (p, count ) {
         b = transpose( b );
 
 
-        for ( var k = 0; k < 4; ++k ) {
+        for ( var k = 0; k < 4; ++k )
+        {
                 var pp = vec4(a[k]);
                 var aa = vec4();
                 var bb = vec4();
@@ -107,7 +113,8 @@ var dividePatch = function (p, count ) {
         }
 
 
-        for ( var k = 0; k < 4; ++k ) {
+        for ( var k = 0; k < 4; ++k )
+        {
                 var pp = vec4(b[k]);
                 var aa = vec4();
                 var bb = vec4();
@@ -126,7 +133,8 @@ var dividePatch = function (p, count ) {
         dividePatch( s, count - 1 );
         dividePatch( t, count - 1 );
     }
-    else {
+    else
+    {
         drawPatch( p );
     }
     return;
@@ -134,7 +142,8 @@ var dividePatch = function (p, count ) {
 //
 
 
-onload = function init()  {
+onload = function init()
+{
 
     canvas = document.getElementById( "gl-canvas" );
 
@@ -146,25 +155,27 @@ onload = function init()  {
     gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
 
     var patch1 = new Array(numTeapotPatches);
-    for(var i=0; i<numTeapotPatches; i++) 
+    for(var i=0; i<numTeapotPatches; i++)
         patch1[i] = new Array(16);
 
     for(var i=0; i<numTeapotPatches; i++)
-        for(var j=0; j<16; j++) {
-            // x z y 
+        for(var j=0; j<16; j++)
+        {
+            // x z y
             patch1[i][j] = vec4([vertices[indices[i][j]][0],
                                  vertices[indices[i][j]][2],
                                  vertices[indices[i][j]][1], 1.0]);
     }
 
-    for ( var n = 0; n < numTeapotPatches; n++ ) {
+    for ( var n = 0; n < numTeapotPatches; n++ )
+    {
         // duplicate each patch
         var patch = new Array(4);
-        for(var k = 0; k<4; k++) 
+        for(var k = 0; k<4; k++)
             patch[k] = new Array(4);
 
-        for(var i=0; i<4; i++) 
-            for(var j=0; j<4; j++) 
+        for(var i=0; i<4; i++)
+            for(var j=0; j<4; j++)
                 patch[i][j] = patch1[n][4*i+j];
 
         // Subdivide the patch
