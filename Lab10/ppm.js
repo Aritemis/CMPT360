@@ -51,20 +51,28 @@ window.onload = function init()
 
 function main()
 {
+    pointsArray = [];
+    colorsArray = [];
     var nx = 500;
     var ny = 500;
 
-    for(var j = 0; j < ny; i++)
+    for(var j = 0; j < ny; j++)
     {
-      for(var i = 0; i < nx; j++)
+      for(var i = 0; i < nx; i++)
       {
-        pointsArray.push(vec2(i, j))
+        var y = -1 + (j * 2 * (.0039));
+        var x = -1 + (i * 2 * (.0039));
+        pointsArray.push(vec3(x, y, 0));
+        //colorsArray.push(vec3(0,0,0));
         colorsArray.push(vec3((i/nx), (j/ny), .2))
+        //console.log(vec3(i, j, 0));
+        //console.log(vec3((i/nx), (j/ny), .2))
       }
     }
 
 
-
+    console.log(pointsArray);
+    console.log(colorsArray);
 
 }
 
@@ -72,5 +80,5 @@ function main()
 var render = function()
 {
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.drawArrays( gl.LINES, 0, pointsArray.length );
+    gl.drawArrays( gl.POINTS, 0, pointsArray.length );
 }

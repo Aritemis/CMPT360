@@ -5,6 +5,7 @@ class ray
   {
     this.A = a;
     this.B = b;
+    console.log("made " + a + " " + b);
   }
 
   origin()
@@ -19,6 +20,6 @@ class ray
 
   point_at_parameter(t)
   {
-    return this.A + t * this.B;
+    return add(this.A, scale(t, this.B));
   }
 }
