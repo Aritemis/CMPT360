@@ -8,7 +8,8 @@ var program;
 var pointsArray = [];
 var colorsArray = [];
 
-window.onload = function init() {
+window.onload = function init()
+{
 
     canvas = document.getElementById( "gl-canvas" );
 
@@ -18,7 +19,7 @@ window.onload = function init() {
     gl.viewport( 0, 0, canvas.width, canvas.height );
     gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
 
-    // add positions and colors of points 
+    // add positions and colors of points
     main();
 
     // Load shaders and initialize attribute buffers
@@ -40,7 +41,7 @@ window.onload = function init() {
     var cBuffer = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer );
     gl.bufferData( gl.ARRAY_BUFFER, flatten(colorsArray), gl.STATIC_DRAW );
-    
+
     var vColor = gl.getAttribLocation( program, "vColor" );
     gl.vertexAttribPointer( vColor, 3, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vColor );
@@ -48,30 +49,34 @@ window.onload = function init() {
     render();
 }
 
-function main() {
+function main()
+{
     // Your code goes here:
 
 
 
 }
 
-function colors(r){
+function colors(r)
+{
     // Your code goes here:
 
 
 
-    
+
 }
 
-function hit_sphere(center, radius, r){
+function hit_sphere(center, radius, r)
+{
     // Your code goes here:
 
 
 
-    
+
 }
 
-var render = function() {
+var render = function()
+{
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays( gl.POINTS, 0, pointsArray.length );
 }
