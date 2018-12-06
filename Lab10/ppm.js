@@ -56,24 +56,16 @@ function main()
     var nx = 500;
     var ny = 500;
 
-    for(var j = 0; j < ny; j++)
+    for(var j = (ny - 1); j >= 0; j--)
     {
       for(var i = 0; i < nx; i++)
       {
-        //var y = -1 + (j * 2 * (.0039));
-        //var x = -1 + (i * 2 * (.0039));
-        var y = -1 + (j * (3 / ny));
-        var x = -1 + (i * (6 / nx));
-        pointsArray.push(vec3(x, y, 0));
-        //pointsArray.push(vec3(i/nx, j/ny, 0));
-        //colorsArray.push(vec3(0,0,0));
+        var y = -1 + (j * (2 / ny));
+        var x = -1 + (i * (2 / nx));
+        pointsArray.push(vec2(x, y));
         colorsArray.push(vec3((i/nx), (j/ny), .2))
-        //console.log(vec3(i, j, 0));
-        //console.log(vec3((i/nx), (j/ny), .2))
       }
     }
-    //console.log(pointsArray);
-    //console.log(colorsArray);
 
 }
 

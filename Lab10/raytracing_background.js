@@ -51,31 +51,30 @@ window.onload = function init()
 
 function main()
 {
-    var nx = 200;
-    var ny = 300;
-    var lowerLeft = vec3(-1, -3, -1);
-    var horizontal = vec3(2, 0, 0);
-    var vertical = vec3(0, 4, 0);
-    var o = vec3(0, 0, 0);
-    for(var j = 299; j >= 0; j--)
+    var nx = 500;
+    var ny = 500;
+    var lowerLeft = vec2(-1, -1);
+    var horizontal = vec2(2, 0);
+    var vertical = vec2(0, 2);
+    var o = vec2(0, 0);
+    for(var j = (ny - 1); j >= 0; j--)
     {
       for(var i = 0; i < nx; i++)
       {
         var u = (i/nx);
-        var v = ((j)/ny);
+        var v = (j/ny);
         var r = new ray(o, add(lowerLeft, add(scale(u, horizontal), scale(v, vertical))));
         var col = colors(r);
         pointsArray.push(r.direction());
         colorsArray.push(col);
       }
     }
-
 }
 
 function colors(r)
 {
     var rDirection = r.direction();
-    var t = .5 * (normalize(srDirection)[1] + 1.0);
+    var t = .5 * (rDirection[1] + 1.0);
     return mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), t);
 }
 
