@@ -51,28 +51,46 @@ window.onload = function init()
 
 function main()
 {
-    // Your code goes here:
-
-
-
+  var nx = 500;
+  var ny = 500;
+  var lowerLeft = vec2(-1, -1);
+  var horizontal = vec2(2, 0);
+  var vertical = vec2(0, 2);
+  var o = vec2(0, 0);
+  for(var j = (ny - 1); j >= 0; j--)
+  {
+    for(var i = 0; i < nx; i++)
+    {
+      var u = (i/nx);
+      var v = (j/ny);
+      var r = new ray(o, add(lowerLeft, add(scale(u, horizontal), scale(v, vertical))));
+      var col = colors(r);
+      pointsArray.push(r.direction());
+      colorsArray.push(col);
+    }
+  }
 }
 
 function colors(r)
 {
-    // Your code goes here:
-
-
-
-
+  var result = vec3(1, 0, 0);
+  if(!(hit_sphere(vec2(0, 0), .5, r)))
+  {
+    result = mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), (.5 * (r.direction()[1] + 1.0)));
+  }
+  return result;
 }
 
 function hit_sphere(center, radius, r)
 {
-    // Your code goes here:
-
-
-
-
+  var oC = subtract(r.origin(), center);
+  var dir = r.direction();
+  var a = dot(dir, dir);
+  var b = 2 * dot(oC, dir);
+  var c = dot(oC, oC) - (radius * radius);
+  var dis = (b * b - 4 * a * c);
+  console.log(dis);
+  return dis <= .5;
 }
 
 var render = function()

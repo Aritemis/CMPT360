@@ -51,8 +51,8 @@ window.onload = function init()
 
 function main()
 {
-    var nx = 500;
-    var ny = 500;
+    var nx = 100;
+    var ny = 100;
     var lowerLeft = vec2(-1, -1);
     var horizontal = vec2(2, 0);
     var vertical = vec2(0, 2);
@@ -73,9 +73,7 @@ function main()
 
 function colors(r)
 {
-    var rDirection = r.direction();
-    var t = .5 * (rDirection[1] + 1.0);
-    return mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), t);
+    return mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), (.5 * (r.direction()[1] + 1.0)));
 }
 
 var render = function()

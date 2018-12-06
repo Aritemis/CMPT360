@@ -20,6 +20,6 @@ class ray
 
   point_at_parameter(t)
   {
-    return add(this.A, scale(t, this.B));
+    return vec3.copy(add(this.A, scale(t, this.B)));
   }
 }
