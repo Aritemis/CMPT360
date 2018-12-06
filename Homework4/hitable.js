@@ -1,13 +1,12 @@
 
 class hit_record
 {
-    get t() { return this.t_val; };
-    set t(val){ this.t_val = val; };
+    gett() { return this.t; };
+    sett(val){ this.t = val; };
 
-    // Your code goes here:
-    // Follow the example above to write getter() and setter() for p and normal.
+    getp() { return this.p; };
+    setp(val){ this.p = val; };
 
-
-
-
+    getnorm() { return this.norm; };
+    setnorm(val){ this.norm = val; };
 }

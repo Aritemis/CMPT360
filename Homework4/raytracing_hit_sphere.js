@@ -10,7 +10,6 @@ var colorsArray = [];
 
 window.onload = function init()
 {
-
     canvas = document.getElementById( "gl-canvas" );
 
     gl = WebGLUtils.setupWebGL( canvas );
@@ -65,7 +64,8 @@ function main()
       var v = (j/ny);
       var r = new ray(o, add(lowerLeft, add(scale(u, horizontal), scale(v, vertical))));
       var col = colors(r);
-      pointsArray.push(r.direction());
+      var original = r.direction();
+      pointsArray.push(vec2(-1 * original[0], -1 * original[1]));
       colorsArray.push(col);
     }
   }
@@ -73,24 +73,36 @@ function main()
 
 function colors(r)
 {
-  var result = vec3(1, 0, 0);
-  if(!(hit_sphere(vec2(0, 0,-1), .5, r)))
+  var result = null;
+  var t = (hit_sphere(vec2(0, 0,-1), .5, r));
+  if(t > -1)
   {
-    result = mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), (.5 * (r.direction()[1] + 1.0)));
+    result = mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), (.5 * (-1 * (r.direction()[1]) + 1.0)));
+  }
+  else
+  {
+    var n = (subtract(r.point_at_parameter(t), vec2(0, 0,-1)));
+    result = scale(.55, vec3(n[0] + 1, n[1] + 1, 1.5));
   }
   return result;
 }
 
 function hit_sphere(center, radius, r)
 {
+  var result = -1;
   var oC = subtract(r.origin(), center);
   var dir = r.direction();
   var a = dot(dir, dir);
   var b = 2 * dot(oC, dir);
   var c = dot(oC, oC) - (radius * radius);
   var dis = (b * b - 4 * a * c);
-  console.log(dis);
-  return dis <= .5;
+  //console.log(dis);
+  if(dis >= .35)
+  {
+    result = ((-b - Math.sqrt(dis)/(2 * a)));
+  }
+  console.log(result);
+  return result;
 }
 
 var render = function()
