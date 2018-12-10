@@ -6,7 +6,6 @@ var render, canvas, gl;
 var points = [];
 var start = vec2(0,-1);
 var end = vec2(0,-0.7);
-
 var NumTimesToSubdivide = 8;
 var shrink = 0.9;
 var theta = Math.PI/20;
@@ -29,12 +28,17 @@ function rotateVector(direction, theta)
 // recursively call itself to push all vertices
 function addpoints(start, end, depth)
 {
+    points.push(start);
+    points.push(end);
     if(depth > 0)
     {
-      var vector = end - start;
-      var dir = mat2(end, start)
-      addpoints(end, (end + (shrink * length(vector) * rotateVector(dir, theta))), depth - 1);
-      addpoints(end, (end + (shrink * length(vector) * rotateVector(dir, -theta))), depth - 1);
+      console.log("start " + start);
+      console.log("end " + end);
+      var vector = subtract(end, start);
+      var vectorLength = length(vector);
+      console.log(vectorLength);
+      addpoints(end, add(end, scale(shrink * vectorLength, rotateVector(vector, theta))), depth - 1);
+      addpoints(end, add(end, scale(shrink * vectorLength, rotateVector(vector, -theta))), depth - 1);
     }
 }
 
