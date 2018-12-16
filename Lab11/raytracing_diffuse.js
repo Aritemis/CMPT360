@@ -53,46 +53,14 @@ function main()
 {
     var nx = 500;
     var ny = 500;
-    // Initialize a sphere using center (0,0,-1) and radius 0.5.
-    var s = new sphere(vec2(0.0,0.0,-1.0), 0.5);
-    // Your code goes here:
-
-    var bottomLeft = vec2(-2.0,-1.0,-1.0);
-    var horizontal = vec2(4.0,0.0,0.0);
-    var vertical = vec2(0.0,2.0,0.0);
-    var origin = vec2(0.0,0.0,0.0);
-
-    for (var j = (ny - 1); j >= 0; j--)
-     {
-        for (var i = 0; i < nx; i++)
-        {
-            let u = (i/nx);
-            let v = (j/ny);
-
-            let r = new ray(origin, add(bottomLeft, add(scale(u, horizontal), scale(v, vertical))));
-            let d = r.direction();
-            let c = colors(r,s);
-
-            pointsArray.push(vec2(-1 * d[0], -1 * d[1]));
-            colorsArray.push(c);
-        }
-    }
 
 }
 
-// r is an object of ray. s is an object of sphere.
-function colors(r, s)
+function colors(r, world, depth)
 {
-    var rec = new hit_record();
-    let t = 0.5*(r.direction()[1] + 1.0);
 
-    if (s.hit(r, rec)){
-        var n = subtract(rec.getNormal(), r.pointAt(t));
-        //n = (subtract(r.point_at_parameter(t), vec2(0, 0,-1)));
-        return scale(.5, vec3(n[0] + 1, n[1] + 1, 1.5));
-    }
 
-    return mix(vec3(1.0, 1.0, 1.0), vec3(.5, .7, 1.0), (.5 * (-1 * (r.direction()[1]) + 1.0)));
+
 }
 
 var render = function()

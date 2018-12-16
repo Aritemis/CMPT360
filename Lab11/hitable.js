@@ -1,3 +1,4 @@
+
 class hit_record
 {
     getT()
@@ -9,7 +10,6 @@ class hit_record
     {
         this.t_val = val;
     };
-
 
     getP()
     {
@@ -30,5 +30,4 @@ class hit_record
     {
         this.normal = normal;
     }
-
 }

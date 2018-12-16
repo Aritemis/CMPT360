@@ -22,4 +22,9 @@ class ray
   {
     return (add(this.A, scale(t, this.B)));
   }
+
+  pointAt(t)
+  {
+    return (add(this.A, scale(t, this.B)));
+  }
 }
